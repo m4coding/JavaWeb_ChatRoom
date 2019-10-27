@@ -25,7 +25,7 @@
         margin-left:-182px;
         margin-right:0px;
         margin-bottom:0px;
-        background: #FF6600;
+        background: var(--theme_color);
 
         display: flex;
         align-items: center;
@@ -62,7 +62,8 @@
 <body>
 <div class="css_main_tb">
     <form class="flex" name="input_form" method="post" action="LoginAction" onsubmit="return check(input_form)">
-        用户名：<input type="text" name="username"><input style="margin-left:10px;" type="image" name="imageGo" src="images/go.jpg">
+        用户名：<input type="text" name="username">
+        <input style="margin-left:10px;" type="image" name="imageGo" src="images/go.jpg">
     </form>
 </div>
 </body>

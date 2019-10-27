@@ -1,11 +1,43 @@
-@import "colors.less";
-
-.text_dark {
-    font-size: 9px;
-    color: #313131;
+/* 自定义变量 :root匹配的就是HTML中的<html>元素 */
+:root {
+    --theme_color: #FF6600;
+    --title_color: #333333;
+    --subtitle_color: #66666;
+    --content_color: #666666;
 }
 
-.text_orange {
+.noBorder {
+    border: none;
+}
+
+.selector {
     font-size: 9px;
-    color: #313131;
+    color: #333333;
+    border: 1px solid #999999;
+    margin-left: 0;
+}
+
+.btnBlank {
+    font-size: 9px;
+    color: #FFFFFF;
+    background-color: #000000;
+    cursor: hand;
+    padding: 1px;
+    border-top: 1px solid #000000;
+    border-right: 1px solid #666666;
+    border-bottom: 1px solid #666666;
+    border-left: 1px solid #000000;
+}
+
+.btnTheme {
+    font-size: 9px;
+    color: #FFFFFF;
+    background-color: var(--theme_color);
+    cursor: hand;
+    padding: 1px;
+    height: 19px;
+    border-top: 1px solid var(--theme_color);
+    border-right: 1px solid #666666;
+    border-bottom: 1px solid #666666;
+    border-left: 1px solid var(--theme_color);
 }
