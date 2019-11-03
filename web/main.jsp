@@ -50,6 +50,43 @@
             background: #CCC49F;
         }
     </style>
+
+    <script language="JavaScript">
+        function checkIsPrivate() {
+            if (form1.isPrivate.checked) {
+                if (form1.to.value == "所有人") {
+                    alert("请选择私聊对象");
+                    form1.to.value = "";
+                }
+            }
+        }
+
+        //滚屏检查
+        function checkScrollScreen() {
+            if (form1.scrollScreen.checked) {
+                document.getElementById("content").style.overflow = "scroll";
+            } else {
+                document.getElementById("content").style.overflow = "hidden";
+                //当聊天信息超过一屏时，设置最先发送的聊天信息不显示
+                document.getElementById('content').scrollTop = document.getElementById('content').scrollHeight * 2;
+            }
+        }
+
+        function showContent() {
+            var loader1 = new net.AjaxRequest("MessagesAction?action=getMessages&nocache="
+                + new Date().getTime(), deal_content, onerror, "GET");
+        }
+
+        function showOnline() {
+
+        }
+
+        window.onload = function () {
+            checkScrollScreen();				//当页面载入后控制是否滚屏
+            showContent();						//当页面载入后显示聊天内容
+            showOnline();						//当页面载入后显示在线人员列表
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -69,7 +106,7 @@
 
         <div class="footer">
             <form action="" name="form1" method="post">
-                <input name="from" type="hidden" value="<%=session.getAttribute("username")%>">[<%=session.getAttribute("username")%>]对
+                [<%=session.getAttribute("username")%>]对
                 <input name="to" type="text" value="" size="35" readonly="readonly">
                 &nbsp;&nbsp;表情
                 <select name="faceSelector" class="selector">
