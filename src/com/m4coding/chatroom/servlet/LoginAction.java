@@ -115,8 +115,7 @@ public class LoginAction extends HttpServlet {
 
                 //写入文件
                 OutputFormat format = OutputFormat.createPrettyPrint(); // 创建OutputFormat对象
-                format.setEncoding("gb2312"); //设置编码格式，避免中文乱码。todo linux平台待测？
-                XMLWriter writer = new XMLWriter(new FileWriter(fileURL), format);
+                XMLWriter writer = new XMLWriter(new FileOutputStream(fileURL), format); //使用FileOutputStream替换FileWriter，避免中文乱码
                 writer.write(feedDoc); // 向流写入数据
                 writer.close(); // 关闭XMLWriter
 

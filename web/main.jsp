@@ -104,7 +104,13 @@
              * content    发言内容
              * isPrivate  是否为悄悄话
              */
-            var param = "from=" + chatForm.fromWhoText.value + "&face=" + chatForm.faceSelector.value + "&color=" + chatForm.colorSelector.value + "&to=" + chatForm.toWhoText.value + "&content=" + chatForm.sendContentText.value + "&isPrivate=" + isPrivate;
+            var param = "from=" + encodeURI(encodeURI(chatForm.fromWhoText.value)) //进行两次uri编码处理，避免多端中文乱码
+                + "&face=" + encodeURI(encodeURI(chatForm.faceSelector.value))
+                + "&color=" + encodeURI(encodeURI(chatForm.colorSelector.value))
+                + "&to=" + encodeURI(encodeURI(chatForm.toWhoText.value))
+                + "&content=" + encodeURI(encodeURI(chatForm.sendContentText.value))
+                + "&isPrivate=" + isPrivate;
+
             var loader = new net.AjaxRequest("MessageAction?action=sendMessage", dealSend, onError, "POST", param);
         }
 

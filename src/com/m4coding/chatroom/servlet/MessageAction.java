@@ -1,5 +1,6 @@
 package com.m4coding.chatroom.servlet;
 
+import com.m4coding.chatroom.config.AppConfig;
 import com.m4coding.chatroom.utils.BusinessUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,7 +87,7 @@ public class MessageAction extends HttpServlet {
                                 df.parse(session.getAttribute("loginTime")
                                         .toString()))
                                 || sendTime.equals(session.getAttribute(
-                                "loginTime").toString())) {
+                                "loginTime").toString())) { //取等于或登陆时间后的消息。。
                             String from = item.elementText("from"); // 获取发言人
                             String face = item.elementText("face"); // 获取表情
                             String to = item.elementText("to"); // 获取接收者
@@ -152,25 +155,28 @@ public class MessageAction extends HttpServlet {
     // 发送聊天信息
     private void sendMessages(HttpServletRequest request,
                              HttpServletResponse response) {
-        response.setContentType("text/html;charset=UTF-8");
-        Random random = new Random();
-        String from = request.getParameter("from"); // 发言人
-        String face = request.getParameter("face"); // 表情
-        String to = request.getParameter("to"); // 接收者
-        String color = request.getParameter("color"); // 字体颜色
-        String content = request.getParameter("content"); // 发言内容
-        String isPrivate = request.getParameter("isPrivate"); // 是否为悄悄话
-        String sendTime = new Date().toLocaleString(); // 发言时间
-
-        System.out.println("sendMessages from=" + from + "; face="
-                + face + "; to=" + to + "; color=" + color + "; content=" + content + "; isPrivate=" + isPrivate + "; sendTime=" + sendTime);
-
-        /** *******************开始添加聊天信息********************************** */
-        String newTime = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        String fileURL = request.getSession().getServletContext()
-                .getRealPath("xml/" + newTime + ".xml");
-        BusinessUtils.createFile(fileURL); // 判断文件是否存在，当文件不存在时创建该文件
         try {
+
+            response.setContentType("text/html;charset=UTF-8");
+            Random random = new Random();
+
+            String from = URLDecoder.decode(request.getParameter("from"), AppConfig.ENCODE_FORMAT); // 发言人
+            String face = URLDecoder.decode(request.getParameter("face"), AppConfig.ENCODE_FORMAT); // 表情
+            String to = URLDecoder.decode(request.getParameter("to"), AppConfig.ENCODE_FORMAT); // 接收者
+            String color = URLDecoder.decode(request.getParameter("color"), AppConfig.ENCODE_FORMAT); // 字体颜色
+            String content = URLDecoder.decode(request.getParameter("content"), AppConfig.ENCODE_FORMAT); // 发言内容
+            String isPrivate = request.getParameter("isPrivate"); // 是否为悄悄话
+            String sendTime = new Date().toLocaleString(); // 发言时间
+
+            System.out.println("sendMessages from=" + from + "; face="
+                    + face + "; to=" + to + "; color=" + color + "; content=" + content + "; isPrivate=" + isPrivate + "; sendTime=" + sendTime);
+
+            /** *******************开始添加聊天信息********************************** */
+            String newTime = new SimpleDateFormat("yyyyMMdd").format(new Date());
+            String fileURL = request.getSession().getServletContext()
+                    .getRealPath("xml/" + newTime + ".xml");
+            BusinessUtils.createFile(fileURL); // 判断文件是否存在，当文件不存在时创建该文件
+
             SAXReader reader = new SAXReader(); // 实例化SAXReader对象
             Document feedDoc = reader.read(new File(fileURL));// 获取XML文件对应的XML文档对象
             Element root = feedDoc.getRootElement(); // 获取根节点
@@ -185,8 +191,7 @@ public class MessageAction extends HttpServlet {
             message.addElement("isPrivate").setText(isPrivate); // 创建子节点
 
             OutputFormat format = OutputFormat.createPrettyPrint(); // 创建OutputFormat对象
-            format.setEncoding("gb2312"); //设置编码格式，避免中文乱码。todo linux平台待测？
-            XMLWriter writer = new XMLWriter(new FileWriter(fileURL), format);
+            XMLWriter writer = new XMLWriter(new FileOutputStream(fileURL), format);
             writer.write(feedDoc); // 向流写入数据
             writer.close(); // 关闭XMLWriter
 
