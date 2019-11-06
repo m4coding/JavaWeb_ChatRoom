@@ -23,28 +23,35 @@
         }
 
         .container {
-            width: 778px;
+            width: 900px;
             background: #FFF;
             margin: 0 auto; /*侧边的自动值与宽度结合使用，可以将布局居中对齐*/
             text-align: left;
         }
 
         .header {
-            padding: 10px 0;
-            background: #ADB96E;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding: 5px 0;
+            background: #CCC49F;
         }
 
         .sidebar {
             float: left; /*侧边栏局左，改为right可令侧边栏居右*/
+            height: 100%;
+            background: #CCC49F;
             width: 200px;
-            height: 300px;
-            background: #a4f;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
 
         .mainContent {
-            width: 570px;
-            height: 300px;
-            background: #eee;
+            height: 100%;
+            background: #f0f0f0;
+            flex-grow: 1; /*沾满剩余的空间*/
+            padding: 10px;
+            font-size: 18px;
         }
 
         .footer {
@@ -58,7 +65,7 @@
     <script src="js/AjaxRequest.js"></script>
     <script>
 
-        var sysBBS = "<span style='font-size:14px; line-height:30px;'>欢迎光临&quot;闲聊&quot;聊天室，请遵守聊天室规则，不要使用不文明用语。</span>" +
+        var sysBBS = "<span style='font-size:15px; line-height:30px;'>欢迎光临&quot;闲聊&quot;聊天室，请遵守聊天室规则，不要使用不文明用语。</span>" +
             "<br>" +
             "<span style='line-height:22px;'>";
 
@@ -232,11 +239,10 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <h1>网页头部</h1>
-    </div>
-
-    <div>
+<%--    <div class="header">--%>
+<%--        <span style="font-size: 30px;margin-top: 10px; margin-bottom: 10px;"></span>--%>
+<%--    </div>--%>
+    <div style="display: flex; height: 500px">
         <div class="sidebar" id="chatRoomOnlinePeople">
             在线人员列表
         </div>

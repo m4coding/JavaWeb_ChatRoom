@@ -97,7 +97,7 @@ public class MessageAction extends HttpServlet {
                             if (isPrivate) { // 获取私聊内容
                                 if (userName.equals(to)
                                         || userName.equals(from)) {
-                                    messages += "<font color='red'>[私人对话]</font><font color='blue'><b>"
+                                    messages += "<font color='red' style='line-height:1.5;'>[私人对话]</font><font color='blue'><b>"
                                             + from
                                             + "</b></font><font color='#CC0000'>"
                                             + face
@@ -110,10 +110,10 @@ public class MessageAction extends HttpServlet {
                                 }
                             } else if ("[系统公告]".equals(from)) { // 获取系统公告信息
                                 messages += "[系统公告]：" + content
-                                        + "&nbsp;<font color='gray'>["
+                                        + "&nbsp;<font color='gray' style='line-height:1.5;'>["
                                         + sendTime + "]</font><br>";
                             } else { // 获取普通发言信息
-                                messages += "<font color='blue'><b>" + from
+                                messages += "<font color='blue' style='line-height:1.5;'><b>" + from
                                         + "</b></font><font color='#CC0000'>"
                                         + face
                                         + "</font>对<font color='green'>[" + to
