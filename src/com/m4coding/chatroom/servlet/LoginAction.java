@@ -4,6 +4,7 @@ import com.m4coding.chatroom.user.UserInfoBean;
 import com.m4coding.chatroom.user.UserInfoManager;
 import com.m4coding.chatroom.user.UserSessionHandler;
 
+import com.m4coding.chatroom.utils.BusinessUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
@@ -51,10 +52,12 @@ public class LoginAction extends HttpServlet {
 
         //若还没保留用户信息，则保存
         if (!isHadRegisterInfo) {
-            UserSessionHandler userSessionHandler = new UserSessionHandler();
             UserInfoBean userInfoBean = new UserInfoBean();
             userInfoBean.username = username;
             UserInfoManager.getInstance().addUserInfo(userInfoBean);
+            //绑带HttpSession监听
+            UserSessionHandler userSessionHandler = new UserSessionHandler();
+            userSessionHandler.setUser(userInfoBean);
             session.setAttribute("user", userSessionHandler);// 将UserSessionHandler对象绑定到Session中
             session.setAttribute("username", username); // 保存当前登录的用户名
             session.setAttribute("loginTime", new Date().toLocaleString()); // 保存登录时间
@@ -74,7 +77,7 @@ public class LoginAction extends HttpServlet {
                 }
                 String fileURL = req.getSession().getServletContext()
                         .getRealPath("xml/" + newTime + ".xml");
-                createFile(fileURL);// 判断XML文件是否存在，如果不存在则创建该文件
+                BusinessUtils.createFile(fileURL);// 判断XML文件是否存在，如果不存在则创建该文件
 
                 /**
                  * 添加对应xml信息,例如：
@@ -93,6 +96,7 @@ public class LoginAction extends HttpServlet {
                  */
                 SAXReader reader = new SAXReader(); // 实例化SAXReader对象
                 Document feedDoc = reader.read(new File(fileURL));// 获取XML文件对应的XML文档对象
+                feedDoc.setXMLEncoding("UTF-8");
                 Element root = feedDoc.getRootElement(); // 获取根节点
                 Element messages = root.element("messages"); // 获取messages节点
                 Element message = messages.addElement("message"); // 创建子节点message
@@ -110,36 +114,13 @@ public class LoginAction extends HttpServlet {
                         resp);
 
                 //写入文件
-                OutputFormat format = new OutputFormat(); // 创建OutputFormat对象
+                OutputFormat format = OutputFormat.createPrettyPrint(); // 创建OutputFormat对象
+                format.setEncoding("gb2312"); //设置编码格式，避免中文乱码。todo linux平台待测？
                 XMLWriter writer = new XMLWriter(new FileWriter(fileURL), format);
                 writer.write(feedDoc); // 向流写入数据
                 writer.close(); // 关闭XMLWriter
 
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    // 根据现在日期生成XML文件名，并判断该文件是否存在，如果不存在将创建该文件
-    private void createFile(String fileURL) {
-
-        //判断XML文件是否存在，如果不存在则创建该文件
-        File file = new File(fileURL);
-        if (!file.exists()) { // 判断文件是否存在，如果不存在，则创建该文件
-            try {
-                file.createNewFile(); // 创建文件
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-                stringBuilder.append("<chat>\r\n");
-                stringBuilder.append("<messages></messages>");
-                stringBuilder.append("</chat>");
-                byte[] content = stringBuilder.toString().getBytes();
-                FileOutputStream fout = new FileOutputStream(file);
-                fout.write(content); // 将数据写入输出流
-                fout.flush(); // 刷新缓冲区
-                fout.close(); // 关闭输出流
-            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
