@@ -25,7 +25,7 @@
         margin-left:-240px;
         margin-right:0px;
         margin-bottom:0px;
-        background: var(--theme_color);
+        background: #CCC49F;
 
         display: flex;
         align-items: center;
@@ -42,7 +42,7 @@
         text-align: justify;
         /*设置对象上下间距为0，左右自动 为了让内容水平居中所设置*/
         margin:0 auto;
-        color:#fff;
+        color:#212121;
         font-size: 20px;
     }
 </style>
@@ -62,7 +62,7 @@
 <body>
 <div class="css_main_tb">
     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;margin:0 auto;">
-        <div style="margin-bottom: 50px;"><span style="font-size: 30px; color: #ffffff;">聊天室</span></div>
+        <div style="margin-bottom: 50px;"><span style="font-size: 30px;">聊天室</span></div>
         <form class="flex" name="input_form" method="post" action="LoginAction" onsubmit="return check(input_form)">
             用户名：<input type="text" name="username">
             <input style="margin-left: 10px; width: 34px; height: 34px;" type="image" name="imageGo" src="images/ic_go_login.png">
