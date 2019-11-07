@@ -20,13 +20,16 @@
             margin: 0; /*消除body中的留白*/
             padding: 0;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
-            width: 900px;
+            width: 830px;
             background: #FFF;
-            margin: 0 auto; /*侧边的自动值与宽度结合使用，可以将布局居中对齐*/
             text-align: left;
+            /*margin: 0 auto; !*侧边的自动值与宽度结合使用，可以将布局居中对齐*!*/
         }
 
         .header {
@@ -314,7 +317,7 @@
                 <input name="sendContentText" type="text" size="70"
                        onKeyDown="if(event.keyCode==13 && event.ctrlKey){send();}">
                 <input name="submitBtn" type="button" class="btnBlank" value="发送" onClick="send()">
-                <input name="exitBtn" type="button" style="float: right;" class="btnTheme" value="退出聊天室"
+                <input name="exitBtn" type="button" style="float: right;" class="btnBlank" value="退出聊天室"
                        onClick="exit()">
             </div>
         </form>

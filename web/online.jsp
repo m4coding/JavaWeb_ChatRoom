@@ -8,7 +8,7 @@
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
-        <td height="40" align="center" class="onlineTitle">欢迎来到&quot;闲聊&quot;聊天室！</td>
+        <td height="32" align="center">欢迎来到&quot;闲聊&quot;聊天室！</td>
     </tr>
     <tr>
         <!-- href="#" 链接到当前页面 如果去掉的话，链接的onclick会失效的-->

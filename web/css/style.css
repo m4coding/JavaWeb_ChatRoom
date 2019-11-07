@@ -56,8 +56,3 @@
     border-bottom: 1px solid #666666;
     border-left: 1px solid var(--theme_color);
 }
-
-.onlineTitle {
-    color: var(--title_color);
-    font-size: 40px;
-}
