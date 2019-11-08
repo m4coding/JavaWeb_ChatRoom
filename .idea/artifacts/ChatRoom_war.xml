@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ChatRoom:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/ChatRoom_war</output-path>
+    <root id="archive" name="ChatRoom_war.war">
+      <element id="artifact" artifact-name="ChatRoom:war exploded" />
+    </root>
+  </artifact>
+</component>
